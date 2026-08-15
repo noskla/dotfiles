@@ -9,6 +9,7 @@ stalonetray
 orage
 xterm
 perl
+dunst
 libgtk3-perl
 libjson-pp-perl
 
