@@ -1,0 +1,239 @@
+# COLUMNS=80
+# -*- fill-column: 80; eval: (auto-fill-mode 1) -*-
+# vim: set tw=80 cc=80 :
+
+# ====== FVWM 3 configuration, Last updated: 16 August 2026 (Europe/Helsinki)
+# Highly inspired by Datagubbe.se FVWM config; http://datagubbe.se/fvwm/
+
+# ====== Terms:
+# FvwmPager = Virtual Desktops
+# FvwmIconMan = Window Manager
+
+# -----------------------------------------------------------------------------
+
+
+# ====== Cursor
+# Sets the traditional X server cursor
+CursorStyle "ROOT" "X_cursor"
+
+
+# ====== FvwmPager Configuration
+
+# Set 2 x 2 virtual desktop grid
+DeskTopSize 2 2
+
+# Add resistance to moving windows between virtual desktops
+# (stick to side of the screen)
+EdgeResistance 150 150
+
+# Disable changing virtual desktops using mouse scroll
+EdgeScroll 0 0
+
+# FvwmPager style
+*FvwmPagerBack #506070
+*FvwmPagerFore black
+*FvwmPagerHilight slategray
+*FvwmPagerFont none
+*FvwmPagerGeometry 120x70
+*FvwmPager: WindowLabelFormat ""
+*FvwmPager: SolidSeparators
+
+
+# ====== FvwmIconMan Configuration
+
+# FvwmIconMan style
+*FvwmIconMan: ManagerGeometry 1x0
+*FvwmIconMan: ButtonGeometry 120x0
+*FvwmIconMan: Format "%t"
+*FvwmIconMan: FocusButton Down black gray
+*FvwmIconMan: PlainButton Up black gray
+*FvwmIconMan: IconButton Up black gray
+*FvwmIconMan: SelectButton Down black gray
+*FvwmIconMan: IconAndSelectButton Down black gray
+*FvwmIconMan: FocusAndSelectButton Down black gray
+
+# Sort by window ID (usually oldest to newest)
+*FvwmIconMan: Sort Id
+
+# Show windows from all virtual desktops
+*FvwmIconMan: Resolution Global
+*FvwmIconMan: DrawIcons none
+
+Style * NoIcon
+
+
+# ====== Window style
+# Active window
+ColorSet 16 fg Black, bg Gray
+Style * HilightColorSet 16
+
+# Inactive window
+ColorSet 17 fg Gainsboro, bg Gray40
+Style * Colorset 17
+
+Style * DecorateTransient
+
+# Use Windows-like click to focus
+Style * ClickToFocus
+Style * !FPFocusByProgram, !FPGrabFocus, OverrideGrabFocus
+
+# Align window title to the left
+TitleStyle LeftJustified
+
+# New windows will be placed right under the mouse pointer
+Style * PositionPlacement UnderMouse
+
+Style * Title, Handles, !MWMFunctions, NoDecorHint
+Style * DepressableBorder, HandleWidth 6, BorderWidth 6
+
+# As the FVWM3-default RightPanel is gone, FvwmIconMan and FvwmPager
+# need to be configured to be independent windows but still feel like
+# core function.
+
+Style "FvwmIconMan"	NoTitle, Sticky, WindowListSkip, NoHandles, \
+	NeverFocus, !UseUSPosition, !UsePPosition, \
+	PositionPlacement -0 160p
+
+Style "FvwmPager"	NoTitle, Sticky, WindowListSkip, NoHandles, FixedSize,\
+	!UseUSPosition, !UsePPosition, PositionPlacement -0 78p
+
+Style "xclock"		NoTitle, Sticky, WindowListSkip, NoHandles, FixedSize,\
+	!UseUSPosition, !UsePPosition, PositionPlacement -0 36p
+
+Style "orage" NoTitle, Sticky, NoHandles, !UseUSPosition, \
+	PositionPlacement -127p 0, FixedSize
+
+Style "stalonetray" NoTitle, WindowListSkip, Sticky, NoHandles, FixedSize, \
+	!UseUSPosition, !UsePPosition, PositionPlacement -0 0
+
+
+AddToFunc StartFunction
+	+ I Module FvwmPager
+	+ I Module FvwmIconMan
+	+ I Exec orage &
+	+ I Exec stalonetray --geometry 5x1-6+6 --slot-size 24 &
+	+ I Exec xclock -digital -strftime "%a, %d.%m. %H:%M" \
+		-face "DejaVu Sans Mono:size=8" -fg "white" -bg "black" \
+		-geometry 120x30 &
+	+ I Exec exec dunst
+
+*FvwmButtons: (96x24, Swallow (NoClose, UseOld) \
+	"stalonetray" `Exec exec stalonetray`)
+
+
+#disable focus stealing
+DestroyFunc UrgencyFunc
+AddToFunc UrgencyFunc
+	+ I Nop
+
+
+# ====== Mouse functions
+ClickTime 250
+
+Mouse 1 W A ThisWindow (xclock) Exec exec orage -t
+
+Mouse 0 1 A Menu Window-Ops2 Close
+Mouse 0 4 A Iconify
+
+Mouse 1 R A Menu RootMenu
+Mouse 3 R A Menu System-Menu Nop
+Mouse 2 R A WindowList
+
+Mouse 0 2 A Maximize 0 100
+
+Mouse 2 FS A Iconify
+Mouse 3 TSIF A RaiseLower
+Mouse 1 T A Maximize-or-Move
+Mouse 2 T A Iconify
+Mouse 1 A 4 Move-or-Raise
+
+
+# ====== Window buttons
+AddToFunc Resize-or-Raise
+	+ I Raise
+	+ M Resize
+	+ D Lower
+
+AddToFunc Maximize-or-Move
+	+ M Move
+	+ D Maximize
+	+ I Raise
+	+ C Focus
+
+AddToFunc Raise-and-Focus
+	+ I Iconify Off
+	+ I Raise
+	+ I Focus
+
+# Alt-tabbing
+AddToFunc TabSwitchNext
+	+I WindowListFunc
+AddToFunc TabSwitchPrev
+	+I Prev TabSwitchNext
+
+# Enable window moving
+OpaqueMoveSize -1
+
+# Emulate Motif WM hints
+Emulate Mwm
+
+
+# ====== Menus
+MenuStyle * Mwm, PopupImmediately, PopdownImmediately, PopupOffset 0 100
+MenuStyle * VerticalItemSpacing 1 1, VerticalTitleSpacing 1 1
+MenuStyle * TitleColorset 18, HilightTitleBack
+MenuStyle * BorderWidth 1, TitleUnderlines1, ItemFormat " %l%> "
+
+AddToMenu Window-Ops2
+	+ "Move"	Move
+	+ "Resize"	Resize
+	+ ""		Nop
+	+ "Destroy"	Destroy
+	+ "Close"	Close
+
+
+AddToMenu System-Menu
+	+ "System"		Title
+	+ "Kill window"		Destroy
+	+ "Delete window"	Delete
+	+ "Restart FVWM"	Restart fvwm3
+	+ "Exit X"		Popup QuitMenu #Quit
+
+AddToMenu QuitMenu "Exit X?" Title
+	+ "Cancel"	Nop
+	+ "Exit"	Quit
+
+
+AddToMenu RootMenu
+	+ "XTerm"		Exec xterm -fn -misc-fixed-medium-r-*-*-18-*-*-*-*-*-iso10646-1 &
+	+ "File Manager"	Exec pcmanfm &
+	+ "Audio Control"	Exec pavucontrol &
+	+ "Connect to SSH"	Popup SSHSessions #Quit
+	+ ""			Nop
+	+ "Mozilla Firefox"	Exec firefox-nightly &
+	+ "Mozilla Thunderbird" Exec thunderbird &
+	+ ""			Nop
+	+ "Calculator"		Exec galculator &
+	+ "KeePassXC"		Exec keepassxc &
+	+ "Gajim"		Exec gajim &
+
+AddToMenu SSHSessions "Available SSH sessions" Title
+	+ DynamicPopUpAction PipeRead 'perl ~/.fvwm/gen_ssh_menu.pl'
+	+ DynamicPopDownAction DestroyMenu recreate SSHSessions
+	+ "" Nop
+	+ "Add new" Exec exec perl ~/.fvwm/add_to_sess_json.pl &
+
+# ====== Keyboard shortcuts
+IgnoreModifiers L25
+
+Key F2 A M Exec exec dmenu_run -b -fn "monospace" -nb "black" -nf "white"
+Key F4 A M Close
+Key Print A N Exec exec flameshot gui
+
+# ====== Autostart
+AddToFunc StartFunction
+	+ I Test (Init) Exec exec xrandr --output HDMI-1 --mode 1920x1080 --rate 240.00
+	+ I Schedule 800 Exec exec fvwm-root -r "$(/bin/ls ~/Wallpapers/* | shuf -n1)"
+	+ I Exec flameshot &
+	+ I Test (X DigiSignApplication) Exec exec DigiSignApplication &
+

@@ -1,0 +1,10 @@
+xrandr --output HDMI-1 --mode 1920x1080 --rate 240.00
+xsetroot -cursor_name X_cursor
+xrdb -merge $HOME/.Xdefaults
+
+# Makes Qt5 apps use GTK font style
+export XDG_CURRENT_DESKTOP=lxde
+
+xbanish &
+
+

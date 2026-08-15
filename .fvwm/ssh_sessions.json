@@ -1,0 +1,14 @@
+{
+   "example1" : {
+      "host" : "127.0.0.1",
+      "identity_file" : "/root/.ssh/fun",
+      "port" : 22055,
+      "user" : "root"
+   },
+   "example2" : {
+      "host" : "192.168.1.145",
+      "password" : "j7sSk3Sgf9D74ggDSvD7",
+      "port" : 22,
+      "user" : "root"
+   }
+}

@@ -1,0 +1,35 @@
+Xcursor.theme: DMZ-Black
+!Xcursor.core: 1
+
+nedit*text.heavyCursor: False
+nedit*text.blinkRate: 0
+
+! === xterm
+
+XTerm*colorMode: True
+XTerm*cursorColor: Plum
+XTerm*foreground: Gray
+XTerm*background: #000715
+
+XTerm*color0: #000715
+XTerm*color1: MediumVioletRed
+XTerm*color2: MediumSeaGreen
+XTerm*color3: SandyBrown
+XTerm*color4: SlateBlue
+XTerm*color5: PaleVioletRed
+XTerm*color6: SteelBlue
+XTerm*color7: Gray
+XTerm*color8: Gray
+XTerm*color9: MediumVioletRed
+XTerm*color10: MediumSeaGreen
+XTerm*color11: SandyBrown
+XTerm*color12: SlateBlue
+XTerm*color13: PaleVioletRed
+XTerm*color14: SteelBlue
+XTerm*color15: Gray
+XTerm*metaSendsEscape: true
+XTerm*altSendsEscape: true
+XTerm*altIsNotMeta: true
+
+XTerm*SimpleMenu*background: AntiqueWhite
+XTerm*SimpleMenu*foreground: gray15
