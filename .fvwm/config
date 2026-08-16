@@ -33,11 +33,12 @@ EdgeScroll 0 0
 *FvwmPagerBack #506070
 *FvwmPagerFore black
 *FvwmPagerHilight slategray
-*FvwmPagerFont none
 *FvwmPagerGeometry 120x70
 *FvwmPager: WindowLabelFormat ""
 *FvwmPager: SolidSeparators
-
+*FvwmPager: Balloons Window
+*FvwmPager: BalloonStringFormat "%n"
+*FvwmPager: BalloonBorderWidth 1
 
 # ====== FvwmIconMan Configuration
 
