@@ -52,13 +52,10 @@ EdgeScroll 0 0
 *FvwmIconMan: SelectButton Down black gray
 *FvwmIconMan: IconAndSelectButton Down black gray
 *FvwmIconMan: FocusAndSelectButton Down black gray
+*FvwmIconMan: DrawIcons none
 
 # Sort by window ID (usually oldest to newest)
 *FvwmIconMan: Sort Id
-
-# Show windows from all virtual desktops
-*FvwmIconMan: Resolution Global
-*FvwmIconMan: DrawIcons none
 
 Style * NoIcon
 
