@@ -2,7 +2,7 @@
 # -*- fill-column: 80; eval: (auto-fill-mode 1) -*-
 # vim: set tw=80 cc=80 :
 
-# ====== FVWM 3 configuration, Last updated: 16 August 2026 (Europe/Helsinki)
+# ====== FVWM 3 configuration, Last updated: 14 August 2026 (Europe/Helsinki)
 # Highly inspired by Datagubbe.se FVWM config; http://datagubbe.se/fvwm/
 
 # ====== Terms:
@@ -92,19 +92,19 @@ Style * DepressableBorder, HandleWidth 6, BorderWidth 6
 
 Style "FvwmIconMan"	NoTitle, Sticky, WindowListSkip, NoHandles, \
 	NeverFocus, !UseUSPosition, !UsePPosition, \
-	PositionPlacement -0 160p
+	PositionPlacement -0 160p, StaysOnTop
 
 Style "FvwmPager"	NoTitle, Sticky, WindowListSkip, NoHandles, FixedSize,\
-	!UseUSPosition, !UsePPosition, PositionPlacement -0 78p
+	!UseUSPosition, !UsePPosition, PositionPlacement -0 78p, StaysOnTop
 
 Style "xclock"		NoTitle, Sticky, WindowListSkip, NoHandles, FixedSize,\
-	!UseUSPosition, !UsePPosition, PositionPlacement -0 36p
+	!UseUSPosition, !UsePPosition, PositionPlacement -0 36p, StaysOnTop
 
 Style "orage" NoTitle, Sticky, NoHandles, !UseUSPosition, \
-	PositionPlacement -127p 0, FixedSize
+	PositionPlacement -127p 0, FixedSize, StaysOnTop
 
 Style "stalonetray" NoTitle, WindowListSkip, Sticky, NoHandles, FixedSize, \
-	!UseUSPosition, !UsePPosition, PositionPlacement -0 0
+	!UseUSPosition, !UsePPosition, PositionPlacement -0 0, StaysOnTop
 
 
 AddToFunc StartFunction
@@ -232,7 +232,7 @@ Key Print A N Exec exec flameshot gui
 
 # ====== Autostart
 AddToFunc StartFunction
-	+ I Test (Init) Exec exec xrandr --output HDMI-1 --mode 1920x1080 --rate 240.00
+	+ I Test (Init) Exec exec xrandr --output HDMI-A-0 --mode 1920x1080 --rate 240.00
 	+ I Schedule 800 Exec exec fvwm-root -r "$(/bin/ls ~/Wallpapers/* | shuf -n1)"
 	+ I Exec flameshot &
 	+ I Test (X DigiSignApplication) Exec exec DigiSignApplication &
