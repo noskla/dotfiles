@@ -37,7 +37,7 @@ EdgeScroll 0 0
 *FvwmPager: WindowLabelFormat ""
 *FvwmPager: SolidSeparators
 *FvwmPager: Balloons Window
-*FvwmPager: BalloonStringFormat "%n"
+*FvwmPager: BalloonStringFormat %t
 *FvwmPager: BalloonBorderWidth 1
 
 # ====== FvwmIconMan Configuration
