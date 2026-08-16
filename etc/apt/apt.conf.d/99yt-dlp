@@ -1,0 +1,3 @@
+# Update manual yt-dlp
+APT::Update::Post-Invoke-Success { "echo '[APT::Update::Post-Invoke-Success] Executing yt-dlp updater...' && /usr/local/bin/yt-dlp -U || true"; };
+
