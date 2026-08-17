@@ -59,6 +59,23 @@ EdgeScroll 0 0
 
 Style * NoIcon
 
+# Alter behaviour of FvwmIconMan to be somewhat explorer-like
+DestroyFunc FocusOrIconify
+AddToFunc FocusOrIconify
+  # if minimised; restore, focus and raise
+  + I ThisWindow (Iconic) Iconify off
+  + I TestRc (Match) Focus
+  + I TestRc (Match) Raise
+  + I TestRc (Match) Break
+  # if window not focused; focus and raise
+  + I ThisWindow (!Focused) Focus
+  + I TestRc (Match) Raise
+  + I TestRc (Match) Break
+  # if window focused; minimise it
+  + I ThisWindow (Focused) Iconify on
+
+*FvwmIconMan: Action Mouse 1 N sendcommand "FocusOrIconify"
+
 
 # ====== Window style
 # Active window
