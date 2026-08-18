@@ -33,12 +33,14 @@ EdgeScroll 0 0
 *FvwmPagerBack #506070
 *FvwmPagerFore black
 *FvwmPagerHilight slategray
+*FvwmPagerFont none
 *FvwmPagerGeometry 120x70
 *FvwmPager: WindowLabelFormat ""
 *FvwmPager: SolidSeparators
 *FvwmPager: Balloons Window
 *FvwmPager: BalloonStringFormat %t
 *FvwmPager: BalloonBorderWidth 1
+
 
 # ====== FvwmIconMan Configuration
 
@@ -62,17 +64,17 @@ Style * NoIcon
 # Alter behaviour of FvwmIconMan to be somewhat explorer-like
 DestroyFunc FocusOrIconify
 AddToFunc FocusOrIconify
-  # if minimised; restore, focus and raise
-  + I ThisWindow (Iconic) Iconify off
-  + I TestRc (Match) Focus
-  + I TestRc (Match) Raise
-  + I TestRc (Match) Break
-  # if window not focused; focus and raise
-  + I ThisWindow (!Focused) Focus
-  + I TestRc (Match) Raise
-  + I TestRc (Match) Break
-  # if window focused; minimise it
-  + I ThisWindow (Focused) Iconify on
+	# if minimised; restore, focus and raise
+	+ I ThisWindow (Iconic) Iconify off
+	+ I TestRc (Match) Focus
+	+ I TestRc (Match) Raise
+	+ I TestRc (Match) Break
+	# if window not focused; focus and raise
+	+ I ThisWindow (!Focused) Focus
+	+ I TestRc (Match) Raise
+	+ I TestRc (Match) Break
+	# if window focused; minimise it
+	+ I ThisWindow (Focused) Iconify on
 
 *FvwmIconMan: Action Mouse 1 N sendcommand "FocusOrIconify"
 
@@ -209,34 +211,68 @@ AddToMenu Window-Ops2
 
 AddToMenu System-Menu
 	+ "System"		Title
+	+ "Randomize wallpaper" Exec exec fvwm-root -r "$(/bin/ls ~/Wallpapers/* | shuf -n1)"
 	+ "Kill window"		Destroy
 	+ "Delete window"	Delete
 	+ "Restart FVWM"	Restart fvwm3
 	+ "Exit X"		Popup QuitMenu #Quit
 
-AddToMenu QuitMenu "Exit X?" Title
+AddToMenu QuitMenu
+	+ "Exit X?" 	Title
 	+ "Cancel"	Nop
 	+ "Exit"	Quit
 
 
 AddToMenu RootMenu
+	+ "Applications"	Title
 	+ "XTerm"		Exec xterm -fn -misc-fixed-medium-r-*-*-18-*-*-*-*-*-iso10646-1 &
 	+ "File Manager"	Exec pcmanfm &
 	+ "Audio Control"	Exec pavucontrol &
 	+ "Connect to SSH"	Popup SSHSessions #Quit
 	+ ""			Nop
+	+ "Productivity"	Popup ProductivityMenu #Quit
+	+ ""			Nop
+	+ "Communications"	Popup CommunicationsMenu #Quit
+	+ ""			Nop
+	+ "VMs and Emulators"	Popup VMMenu #Quit
+
+AddToMenu ProductivityMenu
+	+ "Productivity"	Title
 	+ "Mozilla Firefox"	Exec firefox-nightly &
 	+ "Mozilla Thunderbird" Exec thunderbird &
 	+ ""			Nop
-	+ "Calculator"		Exec galculator &
 	+ "KeePassXC"		Exec keepassxc &
-	+ "Gajim"		Exec gajim &
+	+ "Text Editor"		Exec mousepad &
+	+ "Calculator"		Exec galculator &
+	+ ""			Nop
+	+ "Visual Studio/Codium" Exec codium &
 
-AddToMenu SSHSessions "Available SSH sessions" Title
+AddToMenu CommunicationsMenu
+	+ "Communications"	Title
+	+ "Gajim (XMPP)"	Exec gajim &
+	+ "Mumble"		Exec mumble &
+	+ ""			Nop
+	+ "IRC Connections"	Popup IRCSessions #Quit
+
+AddToMenu VMMenu
+	+ "Virtual Machines"	Title
+	+ "DOSBox"		Exec dosbox &
+	+ "Qemu VM Manager"	Exec virt-manager &
+	+ ""			Nop
+	+ "debian13"		Exec virsh start debian13 2>/dev/null; virt-viewer debian13 &
+
+AddToMenu SSHSessions 
+	+ "SSH Sessions" Title
 	+ DynamicPopUpAction PipeRead 'perl ~/.fvwm/gen_ssh_menu.pl'
 	+ DynamicPopDownAction DestroyMenu recreate SSHSessions
 	+ "" Nop
 	+ "Add new" Exec exec perl ~/.fvwm/add_to_sess_json.pl &
+
+AddToMenu IRCSessions
+	+ "IRC Connections" Title
+	# "irc://test@irc.example.com:6697" Exec \
+	# 	exec ~/.fvwm/pidgin-dbus-hell.pl -s irc.example.com -n test \
+	# 	-w mypassword123 -p 6697 --encrypted
 
 # ====== Keyboard shortcuts
 IgnoreModifiers L25
@@ -250,5 +286,4 @@ AddToFunc StartFunction
 	+ I Test (Init) Exec exec xrandr --output HDMI-A-0 --mode 1920x1080 --rate 240.00
 	+ I Schedule 800 Exec exec fvwm-root -r "$(/bin/ls ~/Wallpapers/* | shuf -n1)"
 	+ I Exec flameshot &
-	+ I Test (X DigiSignApplication) Exec exec DigiSignApplication &
 
